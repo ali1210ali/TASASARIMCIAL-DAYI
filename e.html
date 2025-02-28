@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>E-ticaret</title>
+    <style>
+        /* Genel Stil */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            box-shadow: 0 4px 15px rgba(255, 75, 43, 0.4);
+            position: relative;
+            animation: headerAnimation 5s infinite alternate;
+        }
+        @keyframes headerAnimation {
+            0% { background: linear-gradient(135deg, #ff416c, #ff4b2b); }
+            50% { background: linear-gradient(135deg, #ff4b2b, #ff416c); }
+            100% { background: linear-gradient(135deg, #ff416c, #ff4b2b); }
+        }
+        .cart-icon {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .cart-icon:hover {
+            transform: scale(1.2);
+        }
+        .container {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: flex-start;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .product {
+            flex: 1 1 calc(25% - 40px);
+            max-width: 220px;
+            margin: 10px;
+            padding: 15px;
+            background-color: #2c2c2c;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+        }
+        .product:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(255, 75, 43, 0.6);
+            background-color: #3a3a3a;
+        }
+        .product img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+        .product:hover img {
+            transform: scale(1.1);
+        }
+        .product h3 {
+            margin: 0 0 10px;
+            font-size: 18px;
+            color: #ff4b2b;
+        }
+        .product p {
+            margin: 0;
+            font-size: 14px;
+            color: #ccc;
+        }
+        .product .price {
+            font-weight: bold;
+            color: #ff4b2b;
+            margin-top: 10px;
+            font-size: 18px;
+        }
+        .buy-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #ff4b2b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .buy-button:hover {
+            background-color: #ff416c;
+            transform: scale(1.1);
+        }
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #2c2c2c;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            z-index: 1000;
+            width: 90%;
+            max-width: 500px;
+            animation: modalFadeIn 0.5s ease-out;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translate(-50%, -60%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+        .cart-modal h2 {
+            margin-top: 0;
+            color: #ff4b2b;
+        }
+        .cart-modal ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .cart-modal li {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #3a3a3a;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+        .cart-modal li:hover {
+            transform: translateX(10px);
+        }
+        .cart-modal li button {
+            background-color: #ff4b2b;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .cart-modal li button:hover {
+            background-color: #ff416c;
+        }
+        .close-cart {
+            cursor: pointer;
+            color: #ff4b2b;
+            font-weight: bold;
+            float: right;
+            transition: transform 0.3s;
+        }
+        .close-cart:hover {
+            transform: scale(1.2);
+        }
+        .checkout-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #ff4b2b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .checkout-button:hover {
+            background-color: #ff416c;
+            transform: scale(1.1);
+        }
+        @media (max-width: 768px) {
+            .product {
+                flex: 1 1 calc(50% - 40px);
+                max-width: 200px;
+            }
+            .product img {
+                height: 120px;
+            }
+        }
+        @media (max-width: 480px) {
+            .product {
+                flex: 1 1 100%;
+                max-width: 100%;
+            }
+            .product img {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>E-ticaret</h1>
+        <span class="cart-icon" onclick="toggleCart()">🛒</span>
+    </header>
+    <div class="container">
+        <button onclick="window.location.href='men.html'" class="home-button">Ana Sayfa</button>
+        <h2>Ürünlerimiz</h2>
+        <div class="product">
+            <img src="website-1.jpg" alt="Web Site">
+            <div>
+                <h3>WEB SİTE</h3>
+                <p>Ürün açıklaması burada yer alacak.</p>
+                <p class="price">₺1000</p>
+                <button class="buy-button" onclick="addToCart('Web Site', 1000)">Sepete Ekle</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="yazılım yapılır.png" alt="Yazılım">
+            <div>
+                <h3>YAZILIM</h3>
+                <p>YAZILIM İÇİN İLETİŞİME GEÇİN.</p>
+                <p class="price">₺LÜTFEN MESAJ ATINIZ</p>
+                <button class="buy-button" onclick="addToCart('Yazılım', 0)">Sepete Ekle</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="1.webp" alt="Grafik Tasarım">
+            <div>
+                <h3>GRAFİK TASARIM</h3>
+                <p>HERTÜRLÜ GRAFİK Yapılır.</p>
+                <p class="price">₺MESAJ ATINIZ</p>
+                <button class="buy-button" onclick="addToCart('Grafik Tasarım', 0)">Sepete Ekle</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="1.png" alt="Logo Tasarım">
+            <div>
+                <h3>LOGO TASARIM</h3>
+                <p>HERTÜRLÜ LOGO YAPILIR.</p>
+                <p class="price">₺250</p>
+                <button class="buy-button" onclick="addToCart('Logo Tasarım', 250)">Sepete Ekle</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="slide-2.webp" alt="Animasyonlu Video">
+            <div>
+                <h3>ANİMASYONLU VİDEO</h3>
+                <p>Ürün açıklaması burada yer alacak.</p>
+                <p class="price">₺350</p>
+                <button class="buy-button" onclick="addToCart('Animasyonlu Video', 350)">Sepete Ekle</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sepet Modal -->
+    <div class="cart-modal" id="cartModal">
+        <span class="close-cart" onclick="toggleCart()">X</span>
+        <h2>Sepetiniz</h2>
+        <ul id="cartItems"></ul>
+        <p id="totalPrice">Toplam: ₺0</p>
+        <button class="checkout-button" onclick="checkout()">Satın Al</button>
+    </div>
+
+    <script>
+        const cart = [];
+
+        function addToCart(productName, productPrice) {
+            const existingProduct = cart.find(item => item.name === productName);
+            if (existingProduct) {
+                existingProduct.quantity += 1;
+            } else {
+                cart.push({ name: productName, price: productPrice, quantity: 1 });
+            }
+            updateCart();
+            alert(`${productName} sepete eklendi!`);
+        }
+
+        function toggleCart() {
+            const cartModal = document.getElementById('cartModal');
+            cartModal.style.display = cartModal.style.display === 'none' || cartModal.style.display === '' ? 'block' : 'none';
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById('cartItems');
+            const totalPrice = document.getElementById('totalPrice');
+            cartItems.innerHTML = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    ${item.name} - ₺${item.price} x ${item.quantity}
+                    <button onclick="removeFromCart(${index})">Kaldır</button>
+                `;
+                cartItems.appendChild(li);
+                total += item.price * item.quantity;
+            });
+
+            totalPrice.textContent = `Toplam: ₺${total}`;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function checkout() {
+            const message = cart.map(item => `${item.name} - ₺${item.price} x ${item.quantity}`).join(', ');
+            const whatsappLink = `https://wa.me/5054315002?text=Ürün siparişi vermek istiyorum: ${encodeURIComponent(message)}`;
+            window.open(whatsappLink, '_blank');
+        }
+    </script>
+</body>
+</html>
