@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasarımcı Ali Dayı</title>
+    <style>
+        /* Genel Stil */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: white;
+        }
+
+        header {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: headerPop 2s infinite alternate;
+        }
+
+        @keyframes headerPop {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            animation: textPop 2s infinite alternate;
+        }
+
+        @keyframes textPop {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: black;
+            padding: 10px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s, color 0.3s;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            background-color: rgb(255, 0, 0);
+            color: white;
+            border-radius: 5px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section {
+            flex: 1;
+            padding: 20px;
+            box-sizing: border-box;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .services {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .service {
+            flex: 1 1 calc(25% - 20px);
+            box-sizing: border-box;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .service:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .service img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: rgba(255, 105, 180, 0.8);
+            color: white;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .chat-box {
+            position: fixed;
+            bottom: 50%;
+            right: 50%;
+            transform: translate(50%, 50%);
+            width: 250px;
+            max-height: 350px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translate(50%, 60%); opacity: 0; }
+            to { transform: translate(50%, 50%); opacity: 1; }
+        }
+
+        .chat-toggle-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .chat-toggle-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .chat-header {
+            background-color: #ff69b4;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+        }
+
+        .chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 0;
+        }
+
+        .chat-input button {
+            padding: 10px;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .chat-input button:hover {
+            background-color: #ff1493;
+        }
+
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            padding: 10px 0;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            font-size: 20px;
+            color: #ddd;
+            cursor: pointer;
+        }
+
+        .star-rating input:checked ~ label,
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: #f5b301;
+        }
+
+        @media (max-width: 768px) {
+            .service {
+                flex: 1 1 calc(50% - 20px);
+            }
+        }
+
+        .contact-box {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .main-photo {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Tasarımcı Ali Dayı</h1>
+    </header>
+    <nav>
+        <a href="#anasayfa" class="active">Ana Sayfa</a>
+        <a href="#hizmetler">Hizmetler</a>
+        <a href="#iletisim">İletişim</a>
+        <a href="#hakkinda">Hakkında</a>
+        <a href="e.html">E Sayfası</a>
+    </nav>
+
+    <!-- Ana Sayfa -->
+    <div class="container" id="anasayfa">
+        <div class="section">
+            <h2>Hoş Geldiniz! Tasarımcı Ali Dayı'ya</h2>
+            <p>Sizler için animasyonlu videolar, grafikler ve logolar yapıyoruz! Markanızı en iyi şekilde temsil etmek için güçlü, yaratıcı ve etkili çözümler sunuyoruz.</p>
+            <p><strong>E-ticaret:</strong> Dijital dünyada markanızı öne çıkaracak çözümler sunuyoruz.</p>
+        </div>
+        <div class="section">
+            <img src="yazılım yapılır.png" alt="Ana Sayfa Fotoğrafı" class="main-photo">
+        </div>
+    </div>
+
+    <!-- Hizmetler -->
+    <div class="container" id="hizmetler">
+        <h2>Hizmetlerimiz</h2>
+        <div class="services">
+            <div class="service" onclick="openModal('yazilim')">
+                <img src="12s.jpg" alt="Yazılım Görseli">
+                <h3>Yazılım Yapılır</h3>
+            </div>
+            <div class="service" onclick="openModal('web-tasarim')">
+                <img src="website-1.jpg" alt="Web Tasarım Görseli">
+                <h3>Web Site Tasarımı</h3>
+            </div>
+            <div class="service" onclick="openModal('logo-tasarim')">
+                <img src="1.png" alt="Logo Tasarım Görseli">
+                <h3>Logo Tasarımı</h3>
+            </div>
+            <div class="service" onclick="openModal('animasyon-video')">
+                <img src="slide-2.webp" alt="Animasyon Video Görseli">
+                <h3>Animasyonlu Video Yapımı</h3>
+            </div>
+            <div class="service" onclick="openModal('grafik-tasarim')">
+                <img src="1.webp" alt="Grafik Tasarım Görseli">
+                <h3>Grafik Tasarımı</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hakkında -->
+    <div class="container" id="hakkinda">
+        <h2>Hakkında</h2>
+        <p>Tasarımcı Ali Dayı, yaratıcı çözümler sunarak markanızı en iyi şekilde temsil etmeyi amaçlar. Yılların deneyimi ve profesyonel ekibiyle, projelerinizi hayata geçiriyoruz.</p>
+    </div>
+
+    <!-- İletişim -->
+    <div class="container" id="iletisim">
+        <h2>İletişim</h2>
+        <div class="contact-box">
+            <h3>İletişim Bilgileri</h3>
+            <p style="text-align: center;">Telefon: +90 505 431 5002</p>
+            <p style="text-align: center;"><a href="https://wa.me/5054315002" target="_blank">WhatsApp ile İletişime Geçin</a></p>
+        </div>
+    </div>
+
+    <!-- Chat Asistan -->
+    <button class="chat-toggle-button" onclick="toggleChat()">💬</button>
+    <div class="chat-box" id="chatBox">
+        <div class="chat-header">
+            Asistan
+            <span style="font-size: 20px; margin-left: 10px;">🤖</span>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <p>Merhaba! Size nasıl yardımcı olabilirim?</p>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Mesajınızı yazın...">
+            <button onclick="sendMessage()">Gönder</button>
+        </div>
+    </div>
+    <script>
+        // Yapay Zeka Asistanı İşlemleri
+        function toggleChat() {
+            const chatBox = document.getElementById('chatBox');
+            if (chatBox.style.display === 'none' || chatBox.style.display === '') {
+                chatBox.style.display = 'flex';
+            } else {
+                chatBox.style.display = 'none';
+            }
+        }
+
+        function sendMessage() {
+            const chatInput = document.getElementById('chatInput');
+            const chatMessages = document.getElementById('chatMessages');
+            const message = chatInput.value.trim();
+            if (message) {
+                const messageElement = document.createElement('p');
+                messageElement.textContent = `Siz: ${message}`;
+                chatMessages.appendChild(messageElement);
+                chatInput.value = '';
+
+                // Yapay Zeka Asistanı Cevabı
+                setTimeout(() => {
+                    const responseElement = document.createElement('p');
+                    responseElement.textContent = 'Asistan: Mesajınızı aldım, en kısa sürede yanıtlayacağım!';
+                    chatMessages.appendChild(responseElement);
+                }, 500);
+            }
+        }
+    </script>
+</body>
+</html>
